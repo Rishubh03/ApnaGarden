@@ -1,9 +1,14 @@
 import React from 'react';
 import { View, StyleSheet, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native';
 import { Avatar, Button, Card, Text } from 'react-native-paper';
-import { PostView } from '../index';
+import { useGetFeedsQuery } from '../../services/feedsApi';
+import  PostView from '../components/PostView';
 
 const PostViewScreen = () => {
+	const { data, isSuccess, error, isLoading } = useGetFeedsQuery();
+	if (isLoading){
+		return <Text>Loading...</Text>
+	}else if (isSuccess){
 	return (
 		<SafeAreaView className="flex-1 bg-[#E6E6E6]">
 			<ScrollView className="flex-1">
@@ -40,16 +45,21 @@ const PostViewScreen = () => {
 						</View>
 					</TouchableOpacity>
 				</View>
-
+			{data.map((post =>(
+				<PostView key={post.id} post={post}/>
+			)))}
+				{/* <PostView/>
 				<PostView/>
 				<PostView/>
-				<PostView/>
-				<PostView/>
+				<PostView/> */}
 				
 			</ScrollView>
 		</SafeAreaView>
 		
 	);
+	}else if (error){
+		console.log(error);
+	}
 }
 
 const styles = StyleSheet.create({})

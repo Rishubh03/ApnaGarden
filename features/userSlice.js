@@ -10,11 +10,13 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     setUserInfo: (state, action) => {
+      console.log("action.payload", action.payload)
       state.email = action.payload.email
       state.firstname = action.payload.firstname
       state.lastname = action.payload.lastname
     },
     unSetUserInfo: (state, action) => {
+      console.log("action.payload", action.payload)
       state.email = null;
       state.firstname = null;
       state.lastname = null;

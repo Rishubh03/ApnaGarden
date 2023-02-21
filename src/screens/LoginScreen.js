@@ -2,14 +2,21 @@ import { View, StyleSheet, Image, TouchableWithoutFeedback, StatusBar } from 're
 import React, { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Text, TextInput, Button } from 'react-native-paper';
-import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useLoginUserMutation } from '../../services/userAuthApi'
 import { storeToken } from '../../services/AsyncStorageService';
-
+import { setUserAccessToken } from '../../features/authSlice';
+import Toast from 'react-native-toast-message';
+import { ToastConfig } from 'react-native-toast-message';
 
 const LoginScreen = ({ navigation }) => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const [secureEntry, setSecureEntry] = useState(true)
+
+    const toggleSecureEntry = () => {
+        setSecureEntry(!secureEntry)    // Toggle Secure Entry
+    }
 
     const clearTextInput = () => {
         setEmail('')
@@ -18,24 +25,29 @@ const LoginScreen = ({ navigation }) => {
 
     const [loginUser] = useLoginUserMutation()
 
-    const handleFormSubmit = async () => {
+    const handleFormSubmit = async()  => {
         const formData = { email, password }
         const res = await loginUser(formData)
         if (res.data) {
-            console.log("Response Data", res.data)
             await storeToken(res.data.token)  // Store Token in Storage
             clearTextInput()
             navigation.navigate('MainScreen')
         }
         if (res.error) {
-            console.log("Response Error", res.error.data.errors)
-            console.log(res.error)
+            Toast.show({
+                type: 'error',
+                text1: 'Either email or password is incorrect',
+                visibilityTime: 4000,
+                autoHide: true,
+                topOffset: 30,
+                bottomOffset: 40,
+            })
         }
     }
 
     return (
         <SafeAreaView className="flex-1 justify-center items-center bg-[#E6E6E6] px-3">
-
+            <Toast />
             <Text className="text-2xl font-bold">Welcome Back!</Text>
             <Image
                 className="my-5 w-52 h-44"
@@ -51,13 +63,14 @@ const LoginScreen = ({ navigation }) => {
                 style={{ marginVertical: 5, backgroundColor: '#E6E6E6' }}
                 outlineStyle={{ borderColor: '#50C2C9', borderRadius: 7, borderWidth: 2 }}
             />
+
             <TextInput className="w-full h-12"
                 mode="outlined"
                 value={password}
                 onChangeText={setPassword}
                 label=" Password"
-                secureTextEntry={true}
-                right={<TextInput.Icon icon="eye" />}
+                secureTextEntry={secureEntry}
+                right={<TextInput.Icon icon={secureEntry ? "eye" : "eye-off"} onPress = {toggleSecureEntry} />}
                 activeOutlineColor="#50C2C9"
                 style={{ marginVertical: 5, backgroundColor: '#E6E6E6' }}
                 outlineStyle={{ borderColor: '#50C2C9', borderRadius: 7, borderWidth: 2 }}
@@ -67,26 +80,26 @@ const LoginScreen = ({ navigation }) => {
                 <Text className="font-medium font-base my-2 text-blue-600">Forgot your password?</Text>
             </TouchableWithoutFeedback>
 
-            <Button title="Login" mode='outlined' 
-                labelStyle={{fontSize:16, fontWeight: 'bold'}}
-                textColor="white"                
+            <Button title="Login" mode='outlined'
+                labelStyle={{ fontSize: 16, fontWeight: 'bold' }}
+                textColor="white"
                 style={{ backgroundColor: '#50C2C9', width: '100%', marginVertical: 5, borderColor: '#50C2C9', borderRadius: 25, borderWidth: 2 }}
-            onPress={handleFormSubmit}
+                onPress={handleFormSubmit}
             >LOGIN</Button>
 
             <Text className="text-base font-medium my-2">Or login using social media</Text>
 
 
             <Button
-                labelStyle={{fontSize:16, fontWeight: 'bold'}}
+                labelStyle={{ fontSize: 16, fontWeight: 'bold' }}
                 textColor="white"
-                style={{ backgroundColor: '#1178F2', width: '100%', marginVertical: 5,  borderRadius: 25, borderWidth: 2 }}
+                style={{ backgroundColor: '#1178F2', width: '100%', marginVertical: 5, borderRadius: 25, borderWidth: 2 }}
             >Sign In with Facebook</Button>
 
             <Button
-                labelStyle={{fontSize:16, fontWeight: 'bold'}}
+                labelStyle={{ fontSize: 16, fontWeight: 'bold' }}
                 textColor="white"
-                style={{ backgroundColor: '#FF3E30', width: '100%', marginVertical: 5,  borderRadius: 25, borderWidth: 2 }}
+                style={{ backgroundColor: '#FF3E30', width: '100%', marginVertical: 5, borderRadius: 25, borderWidth: 2 }}
             >Sign In with Google</Button>
 
             <TouchableWithoutFeedback onPress={() => { navigation.navigate("RegistrationScreen") }}>

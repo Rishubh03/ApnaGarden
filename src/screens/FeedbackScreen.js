@@ -3,33 +3,21 @@ import { View, StyleSheet, SafeAreaView, ScrollView } from 'react-native';
 import { Text, Button, TextInput } from 'react-native-paper';
 import { Dropdown } from 'react-native-element-dropdown';
 import { Rating, AirbnbRating } from 'react-native-ratings';
-
-const firstData = [
-	{ label: 'Garden 1', value: '1' },
-	{ label: 'Garden 2', value: '2' },
-	{ label: 'Garden 3', value: '3' },
-	{ label: 'Garden 4', value: '4' },
-	{ label: 'Garden 5', value: '5' },
-	{ label: 'Garden 6', value: '6' },
-	{ label: 'Garden 7', value: '7' },
-	{ label: 'Garden 8', value: '8' },
-];
-const secondData = [
-	{ label: 'Item 9', val: '9' },
-	{ label: 'Item 10', val: '10' },
-	{ label: 'Item 11', val: '11' },
-	{ label: 'Item 12', val: '12' },
-	{ label: 'Item 13', val: '13' },
-	{ label: 'Item 14', val: '14' },
-	{ label: 'Item 15', val: '15' },
-	{ label: 'Item 16', val: '16' },
-];
+import { useGetGardensQuery } from '../../services/gardensApi';
 
 
-const FeedbackScreen = () => {
+const FeedbackScreen = ({navigation}) => {
+	const { data,error, isLoading, isFetching, isSuccess,  } = useGetGardensQuery();
 	const [value, setValue] = useState(null);
 	const [isFocus, setIsFocus] = useState(false);
 	const [rating, setRating] = useState(0);
+	if(isLoading){
+		return <Text className="flex-1 justify-center">Loading...</Text>
+	}else if (isSuccess){
+		const firstData = [];
+		data.map((garden =>(
+			firstData.push({label: garden.garden_name, value: garden.id})
+		)))
 	return (
 		<SafeAreaView className="flex-1 px-2 bg-[#E6E6E6]">
 			<ScrollView>
@@ -69,6 +57,7 @@ const FeedbackScreen = () => {
 					ratingColor='#3498db'
 					ratingBackgroundColor='#c8c7c8'
 					tintColor='#E6E6E6'
+					
 				/>
 				<Text className="text-black text-2xl font-semibold pt-4">Maintenance</Text>
 				<Text className="text-gray-400 text-base font-semibold">How likely are you to recommend Garden 1 to others?</Text>
@@ -80,6 +69,7 @@ const FeedbackScreen = () => {
 					ratingColor='#3498db'
 					ratingBackgroundColor='#c8c7c8'
 					tintColor='#E6E6E6'
+					
 				/>
 				<Text className="text-black text-2xl font-semibold pt-4">Greenery</Text>
 				<Text className="text-gray-400 text-base font-semibold">How likely are you to recommend Garden 1 to others?</Text>
@@ -139,12 +129,16 @@ const FeedbackScreen = () => {
 				<Button title="Login" mode='outlined'
 					labelStyle={{ fontSize: 16, fontWeight: 'bold' }}
 					textColor="white"
+					onPress = {() => navigation.navigate('HomeScreen')}
 					style={{ backgroundColor: '#50C2C9', width: '100%', marginVertical: 10, borderColor: '#50C2C9', borderRadius: 25, borderWidth: 2 }}
 				>SUBMIT</Button>
 
 			</ScrollView>
 		</SafeAreaView>
 	);
+				}else if(error){
+					return <Text className="flex-1 justify-center">Error...</Text>
+				}
 }
 
 const styles = StyleSheet.create({})

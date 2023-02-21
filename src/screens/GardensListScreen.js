@@ -1,10 +1,17 @@
 import React from 'react';
 import { View, StyleSheet, Text, SafeAreaView, ScrollView, Image, TouchableWithoutFeedback } from 'react-native';
 import { TextInput } from 'react-native-paper';
-import { GardenImage } from '../index'
+import GardenImage from '../components/GardenImage';
+import { useGetGardensQuery } from '../../services/gardensApi';
 
 const GardensListScreen = () => {
+	
+	const { data,error, isLoading, isFetching, isSuccess,  } = useGetGardensQuery();
+	if(isLoading){
+		return <Text className="flex-1 justify-center">Loading...</Text>
+	}else if (isSuccess){
 	return (
+		
 		<SafeAreaView className="flex-1 px-2">
 			<ScrollView showsVerticalScrollIndicator={false}>
 				<View className="items-center">
@@ -18,15 +25,24 @@ const GardensListScreen = () => {
 					/>
 				</View>
 				<View className="pb-4">
-					<GardenImage imgUrl={require("../../assets/images/japanese-ross-garden.jpg")} title="Japenese Rose Garden" />
-					<GardenImage imgUrl={require("../../assets/images/ambazari-garden.jpg")} title="Ambazari Garden" />
-					<GardenImage imgUrl={require("../../assets/images/telankhedi-garden.jpg")} title="Telankhedi Garden" />
-					<GardenImage imgUrl={require("../../assets/images/hanuman-nagar-garden.jpg")} title="hanuman Nagar Garden" />
+				{data.map((garden =>(
+					<GardenImage key={garden.id} imgUrl={require("../../assets/images/japanese-ross-garden.jpg")} title={garden.garden_name} />
+				)))}
+
 				</View>
 
 			</ScrollView>
 		</SafeAreaView>
 	);
+	}
+	else if (error){
+		console.log("error");
+		return <Text className="flex-1 justify-center">Error...</Text>
+	}
+	else if (isFetching){
+		console.log("fetching");
+		return <Text className="flex-1 justify-center">Fetching...</Text>
+	}
 }
 
 const styles = StyleSheet.create({})

@@ -1,10 +1,37 @@
-import React from 'react';
+import React,  { useEffect, useState } from 'react';
 import { View, StyleSheet, Text, SafeAreaView, Image, ScrollView, TouchableOpacity } from 'react-native';
-import { ImageSlider } from '../index'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Button } from 'react-native-paper';
+import ImageSlider from '../components/ImageSlider'
 
-const HomeScreen = ({navigation}) => {
+import { useGetLoggedUserQuery } from '../../services/userAuthApi'
+import { useDispatch } from 'react-redux'
+import { setUserAccessToken } from '../../features/authSlice'
+import { setUserInfo } from '../../features/userSlice'
+import { getToken } from '../../services/AsyncStorageService'
+
+const HomeScreen = ({ navigation }) => {
+	const [token, setToken] = useState({})
+	const dispatch = useDispatch()
+	useEffect(() => {
+		(async () => {
+			const token = await getToken()
+			if (token) {
+				const { access, refresh } = JSON.parse(token)
+				setToken({
+					"access": access,
+					"refresh": refresh
+				})
+				dispatch(setUserAccessToken({ access_token: access, refresh: refresh }))
+			}
+		})();
+	}, [])
+	const { data, isSuccess } = useGetLoggedUserQuery(token.access)
+	useEffect(() => {
+		if (isSuccess) {
+			dispatch(setUserInfo({ email: data.email, firstname: data.firstname, lastname: data.lastname }))
+		}
+	})
 	return (
 		<SafeAreaView className="flex-1 px-2">
 			<View className="my-2">
@@ -25,7 +52,7 @@ const HomeScreen = ({navigation}) => {
 
 			<View className="flex-row items-center justify-center mx-4">
 				<View className="w-1/3 h-28 items-center justify-between border-r-2 border-gray-300">
-					<TouchableOpacity onPress={() =>{navigation.navigate('GardenListScreen')}}>
+					<TouchableOpacity onPress={() => { navigation.navigate('GardenListScreen') }}>
 						<MaterialCommunityIcons name="information-outline" color='#50C2C9' size={60} />
 						<Text className="text-center text-sm font-semibold">About{'\n'}Garden</Text>
 					</TouchableOpacity>
@@ -46,19 +73,19 @@ const HomeScreen = ({navigation}) => {
 
 			<View className="flex-row items-center justify-center mx-4 mt-4">
 				<View className=" w-1/3 h-28 items-center justify-between border-r-2 border-gray-300">
-					<TouchableOpacity onPress = {() => {navigation.navigate('FeedbackScreen')}}>
+					<TouchableOpacity onPress={() => { navigation.navigate('FeedbackScreen') }}>
 						<MaterialCommunityIcons name="comment-quote" color='#50C2C9' size={60} />
 						<Text className="text-center text-sm font-semibold">Feedback</Text>
 					</TouchableOpacity>
 				</View>
 				<View className="w-1/3 h-28 items-center justify-between border-r-2 border-gray-300">
-					<TouchableOpacity onPress={() => {navigation.navigate('DepartmentInfoScreen')}}>
+					<TouchableOpacity onPress={() => { navigation.navigate('DepartmentInfoScreen') }}>
 						<MaterialCommunityIcons name="account-group" color='#50C2C9' size={60} />
 						<Text className="text-center text-sm font-semibold">Garden Department</Text>
 					</TouchableOpacity>
 				</View>
 				<View className="w-1/3 h-28 items-center justify-between">
-					<TouchableOpacity onPress={() => {navigation.navigate('RegisterComplaints')}}>
+					<TouchableOpacity onPress={() => { navigation.navigate('TrackComplaint') }}>
 						<MaterialCommunityIcons name="file-document" color='#50C2C9' size={60} />
 						<Text className="text-center text-sm font-semibold">Register Complaints</Text>
 					</TouchableOpacity>

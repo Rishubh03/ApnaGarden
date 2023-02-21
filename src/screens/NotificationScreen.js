@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {View, StyleSheet, SafeAreaView,ScrollView} from 'react-native';
 import { Text } from 'react-native-paper';
-import {NotificationCard} from '../index'
+import NotificationCard from '../components/NotificationCard'
 
 const Test = () => {
 	return (

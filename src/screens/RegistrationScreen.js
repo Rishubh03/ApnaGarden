@@ -13,7 +13,16 @@ const RegistrationScreen = ({ navigation }) => {
     const [password, setPassword] = useState("")
     const [password2, setPassword2] = useState("")
 
+    const [secureEntry1, setSecureEntry1] = useState(true);
+    const [secureEntry2, setSecureEntry2] = useState(true);
 
+    const toggleSecureEntry1 = () => {
+        setSecureEntry1(!secureEntry1)    // Toggle Secure Entry
+    }
+
+    const toggleSecureEntry2 = () => {
+        setSecureEntry2(!secureEntry2)    // Toggle Secure Entry
+    }
 
     const clearTextInput = () => {
         setFirstName('')
@@ -43,29 +52,31 @@ const RegistrationScreen = ({ navigation }) => {
 
             <Text className="text-2xl font-bold py-10">Welcome Onboard!</Text>
             <View className="flex-row justify-between w-full space-x-1">
-            <TextInput
-                className="w-6/12 h-12"
-                label="First name"
-                mode="outlined"
-                value={firstname}
-                onChangeText={setFirstName}
-                activeOutlineColor="#50C2C9"
-                style={{ marginVertical: 5, backgroundColor: '#E6E6E6' }}
-                outlineStyle={{ borderColor: '#50C2C9', borderRadius: 7, borderWidth: 2 }}
-            />
-            <TextInput
-                className="w-6/12 h-12"
-                label="Last name"
-                mode="outlined"
-                value={lastname}
-                onChangeText={setLastName}
-                activeOutlineColor="#50C2C9"
-                style={{ marginVertical: 5, backgroundColor: '#E6E6E6' }}
-                outlineStyle={{ borderColor: '#50C2C9', borderRadius: 7, borderWidth: 2 }}
-            />
+
+                <TextInput
+                    className="w-6/12 h-12"
+                    label="First name"
+                    mode="outlined"
+                    value={firstname}
+                    onChangeText={setFirstName}
+                    activeOutlineColor="#50C2C9"
+                    style={{ marginVertical: 5, backgroundColor: '#E6E6E6' }}
+                    outlineStyle={{ borderColor: '#50C2C9', borderRadius: 7, borderWidth: 2 }}
+                />
+
+                <TextInput
+                    className="w-6/12 h-12"
+                    label="Last name"
+                    mode="outlined"
+                    value={lastname}
+                    onChangeText={setLastName}
+                    activeOutlineColor="#50C2C9"
+                    style={{ marginVertical: 5, backgroundColor: '#E6E6E6' }}
+                    outlineStyle={{ borderColor: '#50C2C9', borderRadius: 7, borderWidth: 2 }}
+                />
 
             </View>
-            
+
 
             <TextInput className="w-full h-12"
                 mode="outlined"
@@ -83,8 +94,8 @@ const RegistrationScreen = ({ navigation }) => {
                 label=" Enter password"
                 value={password}
                 onChangeText={setPassword}
-                secureTextEntry={true}
-                right={<TextInput.Icon icon="eye" />}
+                secureTextEntry={secureEntry1}
+                right={<TextInput.Icon icon={secureEntry1 ? "eye" : "eye-off"} onPress={toggleSecureEntry1} />}
                 activeOutlineColor="#50C2C9"
                 style={{ marginVertical: 5, backgroundColor: '#E6E6E6' }}
                 outlineStyle={{ borderColor: '#50C2C9', borderRadius: 7, borderWidth: 2 }}
@@ -96,8 +107,8 @@ const RegistrationScreen = ({ navigation }) => {
                 label=" Confirm Password"
                 value={password2}
                 onChangeText={setPassword2}
-                secureTextEntry={true}
-                right={<TextInput.Icon icon="eye" />}
+                secureTextEntry={secureEntry2}
+                right={<TextInput.Icon icon={secureEntry2 ? "eye" : "eye-off"} onPress={toggleSecureEntry2} />}
                 activeOutlineColor="#50C2C9"
                 style={{ marginVertical: 5, backgroundColor: '#E6E6E6' }}
                 outlineStyle={{ borderColor: '#50C2C9', borderRadius: 7, borderWidth: 2 }}
@@ -108,7 +119,7 @@ const RegistrationScreen = ({ navigation }) => {
                 labelStyle={{ fontSize: 16, fontWeight: 'bold' }}
                 textColor="white"
                 style={{ backgroundColor: '#50C2C9', width: '100%', marginVertical: 15, borderColor: '#50C2C9', borderRadius: 25, borderWidth: 2 }}
-            onPress={handleFormSubmit}
+                onPress={handleFormSubmit}
             >Register</Button>
 
             <Text style={{ fontWeight: '600', alignSelf: 'center', marginVertical: 5, fontSize: 16 }}>Or</Text>

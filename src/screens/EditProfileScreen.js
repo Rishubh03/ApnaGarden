@@ -9,7 +9,9 @@ import { setUserAccessToken } from '../../features/authSlice'
 
 
 const EditProfileScreen = ({ navigation }) => {
-	
+	const myData = useSelector(state => state.user)
+	const token = useSelector(state => state.auth.accessToken)
+
 	return (
 		<SafeAreaView className="flex-1 bg-[#E6E6E6]">
 			<View className="bg-[#50C2C9] w-full items-center p-2">
@@ -22,7 +24,7 @@ const EditProfileScreen = ({ navigation }) => {
 					<Text className="text-lg text-gray-500 pt-4">Your Name</Text>
 					<TextInput className="w-full h-12"
 						mode="outlined"
-						value={firstname}
+						value={myData.firstname}
 						onChangeText={setFirstName}
 						label="Name"
 						activeOutlineColor="#50C2C9"

@@ -1,18 +1,17 @@
 import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { HomeScreen, ProfileScreen, FeedNavigatorScreen, NotificationScreen } from '../index';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
-import Test from './Test';
-
+import HomeScreen from './HomeScreen';
+import FeedNavigatorScreen from './FeedNavigatorScreen';
+import NotificationScreen from './NotificationScreen';
+import ProfileScreen from './ProfileScreen';
 const Tab = createBottomTabNavigator();
 
 const MainNavigatorScreen = () => {
 	return (
 		<Tab.Navigator initialRouteName='Home'>
-
-
 			<Tab.Screen name="HomeScreen" component={HomeScreen}
 				options={{
 					tabBarIcon: ({ color, size }) => (
@@ -22,7 +21,6 @@ const MainNavigatorScreen = () => {
 					title: 'Home',
 				}}
 			/>
-
 			<Tab.Screen name="Feeds" component={FeedNavigatorScreen}
 				options={{
 					tabBarIcon: ({ color, size }) => (
@@ -41,7 +39,6 @@ const MainNavigatorScreen = () => {
 					title: 'Notification',
 				}}
 			/>
-
 			<Tab.Screen name="Profile" component={ProfileScreen}
 				options={{
 					tabBarIcon: ({ color, size }) => (
@@ -51,9 +48,6 @@ const MainNavigatorScreen = () => {
 					title: 'Profile',
 				}}
 			/>
-
-
-
 			{/* <Tab.Screen name = "Test" component={Test} options={{headerShown:false}}/>	 */}
 
 		</Tab.Navigator>

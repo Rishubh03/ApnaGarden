@@ -14,13 +14,15 @@ import {
   MainNavigatorScreen,
   HomeScreen,
   EditProfileScreen,
-  ProfileScreen,
   FeedbackScreen,
   DepartmentInfoScreen,
   GardensListScreen,
   RegisterComplaints,
+  TrackComplaint,
+  TrackComplaintDetails,
 
 } from './src/index';
+import ProfileScreen from './src/screens/ProfileScreen';
 
 const Stack = createStackNavigator();
 
@@ -34,7 +36,7 @@ function App({ navigation }) {
           title: 'Welcome',
           animationTypeForReplace: 'pop',
         }} />
-
+      
         <Stack.Screen name="MainScreen" component={MainNavigatorScreen} options={{
           title: 'Main Screen',
           headerShown: false,
@@ -82,6 +84,14 @@ function App({ navigation }) {
         }} />
         <Stack.Screen name="PasswordResetScreen" component={PasswordResetScreen} options={{
           title: 'Reset password',
+          animationTypeForReplace: 'pop',
+        }} />
+        <Stack.Screen name="TrackComplaint" component={TrackComplaint} options={{
+          title: 'Track Complaint',
+          animationTypeForReplace: 'pop',
+        }} />
+        <Stack.Screen name="TrackComplaintDetails" component={TrackComplaintDetails} options={{
+          title: 'Complaint Details',
           animationTypeForReplace: 'pop',
         }} />
 

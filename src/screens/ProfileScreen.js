@@ -8,15 +8,7 @@ import { useDispatch } from 'react-redux'
 import { setUserAccessToken } from '../../features/authSlice'
 
 const ProfileScreen = ({ navigation }) => {
-	const [token, setToken] = useState({})
-	const dispatch = useDispatch()
-
-	async() => {
-		setToken(await getToken())
-	}
-
-	console.log(token)
-
+	const myData = useSelector(state => state.user)
 	const handleFormSubmit = async () => {
 		await removeToken()
 		console.log("LogoutSuccess")
@@ -33,11 +25,11 @@ const ProfileScreen = ({ navigation }) => {
 				<Card className="mt-5 mx-2 p-4" type="elevated">
 					<Text className="text-xl font-600">Personal Details</Text>
 					<Text className="text-lg text-gray-500 pt-4">Name</Text>
-					<Text className="text-md "></Text>
+					<Text className="text-md ">{myData.firstname} {myData.lastname}</Text>
 					<Text className="text-lg text-gray-500 pt-4">Mobile Name</Text>
-					<Text className="text-md">1234567890</Text>
+					<Text className="text-md">9518759654</Text>
 					<Text className="text-lg text-gray-500 pt-4">Email</Text>
-					<Text className="text-md"></Text>
+					<Text className="text-md">{myData.email}</Text>
 					<View className="pt-4">
 						<Button title="Login" mode='outlined'
 							labelStyle={{ fontSize: 16, fontWeight: 'bold' }}
@@ -61,6 +53,7 @@ const ProfileScreen = ({ navigation }) => {
 		</SafeAreaView>
 
 	);
+	
 }
 
 const styles = StyleSheet.create({})
