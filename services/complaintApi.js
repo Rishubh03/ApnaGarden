@@ -5,9 +5,9 @@ export const complaintApi = createApi({
 	baseQuery: fetchBaseQuery({ baseUrl: 'http://192.168.0.108:8000/api/complaint/' }),
 	endpoints: (builder) => ({
 		registerComplaint: builder.mutation({
-			query: (complaint,token) => {
+			query: ({complaint,token}) => {
 				return {
-					url: 'register/',
+					url: 'createcomplaint/',
 					method: 'POST',
 					body: complaint,
 					headers: {
@@ -20,7 +20,7 @@ export const complaintApi = createApi({
 		listComplaint: builder.query({
 			query:(token) => {
 				return {
-					url:'register/',
+					url:'listcomplaint/',
 					method: 'GET',
 					headers: {
 						'Authorization': `Bearer ${token}`

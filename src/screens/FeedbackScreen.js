@@ -11,6 +11,9 @@ const FeedbackScreen = ({navigation}) => {
 	const [value, setValue] = useState(null);
 	const [isFocus, setIsFocus] = useState(false);
 	const [rating, setRating] = useState(0);
+
+	
+
 	if(isLoading){
 		return <Text className="flex-1 justify-center">Loading...</Text>
 	}else if (isSuccess){

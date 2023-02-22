@@ -12,8 +12,21 @@ export const feedsApi = createApi({
 				};
 			},
 		}),
+		createPost: builder.mutation({
+			query: ({post,token}) => {
+				return {
+					url: 'post/',
+					method: 'POST',
+					body: post,
+					headers: {
+						'Content-type': 'application/json',
+						'Authorization': `Bearer ${token}`,
+					}
+				}
+			}
+		}),
 
 	}),
 });
 
-export const { useGetFeedsQuery } = feedsApi;
+export const { useGetFeedsQuery, useCreatePostMutation } = feedsApi;
