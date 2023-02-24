@@ -20,7 +20,7 @@ import {
   RegisterComplaints,
   TrackComplaint,
   TrackComplaintDetails,
-
+  CreateFeedPost,
 } from './src/index';
 import ProfileScreen from './src/screens/ProfileScreen';
 
@@ -92,6 +92,10 @@ function App({ navigation }) {
         }} />
         <Stack.Screen name="TrackComplaintDetails" component={TrackComplaintDetails} options={{
           title: 'Complaint Details',
+          animationTypeForReplace: 'pop',
+        }} />
+        <Stack.Screen name="CreateFeedPost" component={CreateFeedPost} options={{
+          title: 'Create Post',
           animationTypeForReplace: 'pop',
         }} />
 

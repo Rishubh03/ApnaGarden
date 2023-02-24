@@ -11,6 +11,10 @@ import { setUserAccessToken } from '../../features/authSlice'
 const EditProfileScreen = ({ navigation }) => {
 	const myData = useSelector(state => state.user)
 	const token = useSelector(state => state.auth.accessToken)
+	const [firstName, setFirstName] = useState(myData.firstname)
+	const [lastName, setLastName] = useState(myData.lastname)
+	const [mobile, setMobile] = useState(myData.mobile)
+	const [email, setEmail] = useState(myData.email)
 
 	return (
 		<SafeAreaView className="flex-1 bg-[#E6E6E6]">

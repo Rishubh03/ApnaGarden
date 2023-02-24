@@ -11,7 +11,7 @@ export {default as DepartmentInfoScreen} from './screens/DepartmentInfoScreen'
 export {default as RegisterComplaints} from './screens/RegisterComplaints'
 export {default as TrackComplaint} from './screens/TrackComplaint'
 export {default as TrackComplaintDetails} from './screens/TrackComplaintDetails'
-
+export {default as CreateFeedPost} from './screens/CreateFeedPost'
 
 
 

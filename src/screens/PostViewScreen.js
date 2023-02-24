@@ -4,7 +4,7 @@ import { Avatar, Button, Card, Text } from 'react-native-paper';
 import { useGetFeedsQuery } from '../../services/feedsApi';
 import  PostView from '../components/PostView';
 
-const PostViewScreen = () => {
+const PostViewScreen = ({navigation}) => {
 	const { data, isSuccess, error, isLoading } = useGetFeedsQuery();
 	if (isLoading){
 		return <Text>Loading...</Text>
@@ -33,7 +33,8 @@ const PostViewScreen = () => {
 						</View>
 					</TouchableOpacity>
 					
-					<TouchableOpacity className="items-center flex-col flex-1 bg-white h-28 m-2 justify-center border-solid border-2 border-[#1F83B4]  rounded-md">
+					<TouchableOpacity className="items-center flex-col flex-1 bg-white h-28 m-2 justify-center border-solid border-2 border-[#1F83B4]  rounded-md"
+						onPress ={() => navigation.navigate('CreateFeedPost')}>
 						<View className=" items-center ">
 
 							<Avatar.Icon size={32} icon="pencil" color="white" style={{backgroundColor:"#50C2C9" }}/>

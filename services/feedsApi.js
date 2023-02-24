@@ -15,7 +15,7 @@ export const feedsApi = createApi({
 		createPost: builder.mutation({
 			query: ({post,token}) => {
 				return {
-					url: 'post/',
+					url: 'post/create/',
 					method: 'POST',
 					body: post,
 					headers: {
