@@ -44,7 +44,7 @@ function App({ navigation }) {
         }} />
 
         <Stack.Screen name="EditProfileScreen" component={EditProfileScreen} options={{
-          title: 'Profile Screen',
+          title: 'Edit Profile',
           animationTypeForReplace: 'pop',
         }} />
 
@@ -72,7 +72,6 @@ function App({ navigation }) {
           title: 'Register Complaints',
           animationTypeForReplace: 'pop',
         }} />
-
 
         <Stack.Screen name="LoginScreen" component={LoginScreen} options={{
           title: 'Sign in',

@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery, } from '@reduxjs/toolkit/query/react'
 
 export const complaintApi = createApi({
 	reducerPath: 'complaintApi',
-	baseQuery: fetchBaseQuery({ baseUrl: 'http://192.168.0.108:8000/api/complaint/' }),
+	baseQuery: fetchBaseQuery({ baseUrl: 'http://192.168.34.101:8000/api/complaint/' }),
 	endpoints: (builder) => ({
 		registerComplaint: builder.mutation({
 			query: ({complaint,token}) => {

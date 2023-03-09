@@ -25,12 +25,22 @@ const EditProfileScreen = ({ navigation }) => {
 			<View>
 				<Card className="mt-5 mx-2 p-4" type="elevated">
 					<Text className="text-xl font-600">Personal Details</Text>
-					<Text className="text-lg text-gray-500 pt-4">Your Name</Text>
+					<Text className="text-lg text-gray-500 pt-4">First Name</Text>
 					<TextInput className="w-full h-12"
 						mode="outlined"
 						value={myData.firstname}
 						onChangeText={setFirstName}
-						label="Name"
+						label="First Name"
+						activeOutlineColor="#50C2C9"
+						style={{ marginVertical: 5, backgroundColor: '#E6E6E6' }}
+						outlineStyle={{ borderColor: '#50C2C9', borderRadius: 7, borderWidth: 2 }}
+					/>
+					<Text className="text-lg text-gray-500 pt-4">Last Name</Text>
+					<TextInput className="w-full h-12"
+						mode="outlined"
+						value={myData.lastname}
+						onChangeText={setLastName}
+						label="Last Name"
 						activeOutlineColor="#50C2C9"
 						style={{ marginVertical: 5, backgroundColor: '#E6E6E6' }}
 						outlineStyle={{ borderColor: '#50C2C9', borderRadius: 7, borderWidth: 2 }}
@@ -50,7 +60,7 @@ const EditProfileScreen = ({ navigation }) => {
 					<Text className="text-lg text-gray-500 pt-4">Email</Text>
 					<TextInput className="w-full h-12"
 						mode="outlined"
-						value={"abc@gmail.com"}
+						value={email}
 						onChangeText={setEmail}
 						label=" Email Address"
 						activeOutlineColor="#50C2C9"
