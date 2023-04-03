@@ -46,11 +46,11 @@ const LoginScreen = ({ navigation }) => {
     }
 
     return (
-        <SafeAreaView className="flex-1 justify-center items-center bg-[#E6E6E6] px-3">
+        <SafeAreaView className="flex-1 justify-center items-center bg-white px-3">
             <Toast />
             <Text className="text-2xl font-bold">Welcome Back!</Text>
             <Image
-                className="my-5 w-52 h-44"
+                className="my-5 w-80 h-56"
                 source={require('../../assets/images/first-page-logo.png')}
             />
 
@@ -60,7 +60,7 @@ const LoginScreen = ({ navigation }) => {
                 onChangeText={setEmail}
                 label=" Email Address"
                 activeOutlineColor="#50C2C9"
-                style={{ marginVertical: 5, backgroundColor: '#E6E6E6' }}
+                style={{ marginVertical: 5, backgroundColor: 'white' }}
                 outlineStyle={{ borderColor: '#50C2C9', borderRadius: 7, borderWidth: 2 }}
             />
 
@@ -72,7 +72,7 @@ const LoginScreen = ({ navigation }) => {
                 secureTextEntry={secureEntry}
                 right={<TextInput.Icon icon={secureEntry ? "eye" : "eye-off"} onPress = {toggleSecureEntry} />}
                 activeOutlineColor="#50C2C9"
-                style={{ marginVertical: 5, backgroundColor: '#E6E6E6' }}
+                style={{ marginVertical: 5, backgroundColor: 'white' }}
                 outlineStyle={{ borderColor: '#50C2C9', borderRadius: 7, borderWidth: 2 }}
             />
 

@@ -35,6 +35,7 @@ function App({ navigation }) {
         <Stack.Screen name="FirstScreen" component={FirstScreen} options={{
           title: 'Welcome',
           animationTypeForReplace: 'pop',
+          headerShown: false,
         }} />
       
         <Stack.Screen name="MainScreen" component={MainNavigatorScreen} options={{
