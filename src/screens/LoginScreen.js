@@ -8,11 +8,13 @@ import { storeToken } from '../../services/AsyncStorageService';
 import { setUserAccessToken } from '../../features/authSlice';
 import Toast from 'react-native-toast-message';
 import { ToastConfig } from 'react-native-toast-message';
+import { addNotification } from '../../features/notificationSlice';
 
 const LoginScreen = ({ navigation }) => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [secureEntry, setSecureEntry] = useState(true)
+    const dispatch = useDispatch();
 
     const toggleSecureEntry = () => {
         setSecureEntry(!secureEntry)    // Toggle Secure Entry
@@ -31,7 +33,8 @@ const LoginScreen = ({ navigation }) => {
         if (res.data) {
             await storeToken(res.data.token)  // Store Token in Storage
             clearTextInput()
-            navigation.navigate('MainScreen')
+            dispatch(setUserAccessToken(res.data.token))  // Set Token in Redux Store
+            dispatch(addNotification({message: 'Login Successful'}))
         }
         if (res.error) {
             Toast.show({

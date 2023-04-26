@@ -7,11 +7,13 @@ const TcDetails = ({ item, token }) => {
 	const navigation = useNavigation();
 	return (
 		<View>
-			<TouchableOpacity onPress={() => { navigation.navigate("TrackComplaintDetails",{
-				id: item.id,
-				token: token,
-				
-			}) }}>
+			<TouchableOpacity onPress={() => {
+				navigation.navigate("TrackComplaintDetails", {
+					id: item.id,
+					token: token,
+
+				})
+			}}>
 				<View className="border-2 p-2 rounded-lg border-gray-400 mb-2">
 					<Text className="text-lg text-gray-500">Id : {item.id}</Text>
 					<Text className="text-lg text-gray-500 pt-2">Garden Name : {item.garden}</Text>

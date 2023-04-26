@@ -4,9 +4,12 @@ import { Card, Button, TextInput } from 'react-native-paper'
 import { Dropdown } from 'react-native-element-dropdown';
 import { useGetGardensQuery } from '../../services/gardensApi';
 import { useSelector } from 'react-redux';
-import {useRegisterComplaintMutation} from '../../services/complaintApi'
+import { useRegisterComplaintMutation } from '../../services/complaintApi'
+import { useDispatch } from 'react-redux';
+import { addNotification } from '../../features/notificationSlice';
+import * as ImagePicker from 'expo-image-picker';
 
-const RegisterComplaints = ({navigation}) => {
+const RegisterComplaints = ({ navigation }) => {
     const token = useSelector(state => state.auth.access_token)
     const { data, isSuccess } = useGetGardensQuery();
     const [garden, setGarden] = useState(null);
@@ -14,17 +17,43 @@ const RegisterComplaints = ({navigation}) => {
     const [title, setTitle] = useState('');
     const [details, setDetails] = useState('');
     const [registerComplaint] = useRegisterComplaintMutation()
+    
+    const dispatch = useDispatch();
+
     const handleFormSubmit = async () => {
-        const complaint = {garden, title, details}
-        const res = await registerComplaint({complaint,token})
+        const complaint = new FormData();
+        complaint.append('image_url', {
+            uri: image.uri,
+            type: "image/jpeg",
+            name: "image.jpeg",
+          });
+        complaint.append('garden', garden)
+        complaint.append('title', title)
+        complaint.append('details', details)
+        const res = await registerComplaint({ complaint, token })
+        dispatch(addNotification({ message: 'Complaint Registered' }))
         if (res.data) {
             console.log(res.data)
             navigation.navigate('HomeScreen')
-        }else {
+        } else {
             console.log(res.error)
         }
-    }           
+    }
 
+    const [image, setImage] = useState(null);
+    const handleImageUpload = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: "Images",
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1,
+          });
+          console.log(result);
+
+          if (!result.canceled) {
+            setImage(result.assets[0]);
+          }
+    }
     if (isSuccess) {
         const firstData = [];
         data.map((garden => (
@@ -69,7 +98,6 @@ const RegisterComplaints = ({navigation}) => {
                         style={{ marginVertical: 5, backgroundColor: 'white' }}
                         outlineStyle={{ borderColor: '#50C2C9', borderRadius: 7, borderWidth: 2 }}
                     />
-
                     <TextInput className="w-full"
                         multiline={true}
                         mode="outlined"
@@ -81,7 +109,12 @@ const RegisterComplaints = ({navigation}) => {
                         style={{ marginVertical: 5, backgroundColor: 'white' }}
                         outlineStyle={{ borderColor: '#50C2C9', borderRadius: 7, borderWidth: 2 }}
                     />
-
+                    <Button title="Upload Image" mode='outlined'
+                        labelStyle={{ fontSize: 13, fontWeight: 'bold' }}
+                        textColor="white"
+                        style={{ backgroundColor: 'gray', width: '40%'}}
+                        onPress={handleImageUpload}
+                    >Choose Image</Button>
 
                     <Button title="Submit" mode='outlined'
                         labelStyle={{ fontSize: 16, fontWeight: 'bold' }}

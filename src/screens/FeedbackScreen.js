@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, SafeAreaView, ScrollView } from 'react-native';
+import { View, StyleSheet, SafeAreaView, ScrollView, ActivityIndicator, RefreshControl } from 'react-native';
 import { Text, Button, TextInput } from 'react-native-paper';
 import { Dropdown } from 'react-native-element-dropdown';
 import { Rating, AirbnbRating } from 'react-native-ratings';
@@ -7,23 +7,38 @@ import { useGetGardensQuery } from '../../services/gardensApi';
 
 
 const FeedbackScreen = ({navigation}) => {
-	const { data,error, isLoading, isFetching, isSuccess,  } = useGetGardensQuery();
+	const { data,error, isLoading, isFetching, isSuccess,refetch  } = useGetGardensQuery();
 	const [value, setValue] = useState(null);
 	const [isFocus, setIsFocus] = useState(false);
 	const [rating, setRating] = useState(0);
 
-	
+	const [refreshing, setRefreshing] = React.useState(false);
+
+	const onRefresh = React.useCallback(() => {
+		setRefreshing(true);
+		setTimeout(() => {
+			
+			setRefreshing(false);
+			refetch();
+		}, 2000);
+	}, []);
 
 	if(isLoading){
-		return <Text className="flex-1 justify-center">Loading...</Text>
+		return (
+			<View className="flex-1 justify-center items-center">
+				<ActivityIndicator size="large" color="#50C2C9" />
+			</View>
+		)
 	}else if (isSuccess){
 		const firstData = [];
 		data.map((garden =>(
 			firstData.push({label: garden.garden_name, value: garden.id})
 		)))
 	return (
-		<SafeAreaView className="flex-1 px-2 bg-[#E6E6E6]">
-			<ScrollView>
+		<SafeAreaView className="flex-1 px-2 bg-white">
+			<ScrollView refreshControl={
+						<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+					}>
 				<Text className="text-3xl font-bold">Leave a review</Text>
 				<Text className="text-black text-2xl font-semibold pt-4">Select a Garden</Text>
 				<Dropdown
@@ -56,11 +71,6 @@ const FeedbackScreen = ({navigation}) => {
 					type='star'
 					ratingCount={5}
 					imageSize={40}
-
-					ratingColor='#3498db'
-					ratingBackgroundColor='#c8c7c8'
-					tintColor='#E6E6E6'
-					
 				/>
 				<Text className="text-black text-2xl font-semibold pt-4">Maintenance</Text>
 				<Text className="text-gray-400 text-base font-semibold">How likely are you to recommend Garden 1 to others?</Text>
@@ -68,10 +78,7 @@ const FeedbackScreen = ({navigation}) => {
 					type='star'
 					ratingCount={5}
 					imageSize={40}
-
-					ratingColor='#3498db'
-					ratingBackgroundColor='#c8c7c8'
-					tintColor='#E6E6E6'
+				
 					
 				/>
 				<Text className="text-black text-2xl font-semibold pt-4">Greenery</Text>
@@ -80,9 +87,7 @@ const FeedbackScreen = ({navigation}) => {
 					type='star'
 					ratingCount={5}
 					imageSize={40}
-					ratingColor='#3498db'
-					ratingBackgroundColor='#c8c7c8'
-					tintColor='#E6E6E6'
+					
 
 				/>
 				<Text className="text-black text-2xl font-semibold pt-4">Facilities</Text>
@@ -91,9 +96,7 @@ const FeedbackScreen = ({navigation}) => {
 					type='star'
 					ratingCount={5}
 					imageSize={40}
-					ratingColor='#3498db'
-					ratingBackgroundColor='#c8c7c8'
-					tintColor='#E6E6E6'
+				
 				/>
 
 				<Text className="text-black text-2xl font-semibold pt-4">Security</Text>
@@ -102,9 +105,7 @@ const FeedbackScreen = ({navigation}) => {
 					type='star'
 					ratingCount={5}
 					imageSize={40}
-					ratingColor='#3498db'
-					ratingBackgroundColor='#c8c7c8'
-					tintColor='#E6E6E6'
+					
 				/>
 				<Text className="text-black text-2xl font-semibold pt-4">Rate Garden</Text>
 				<Text className="text-gray-400 text-base font-semibold">How likely are you to recommend Garden 1 to others?</Text>
@@ -112,9 +113,7 @@ const FeedbackScreen = ({navigation}) => {
 					type='star'
 					ratingCount={5}
 					imageSize={40}
-					tintColor='#E6E6E6'
-					ratingColor='#3498db'
-					ratingBackgroundColor='#c8c7c8'
+					
 				/>
 
 				<Text className="text-black text-xl font-semibold pt-4">Anyting Else?</Text>
@@ -122,7 +121,7 @@ const FeedbackScreen = ({navigation}) => {
 						mode='outlined'
 						outlineColor="gray"
 						activeOutlineColor='gray'
-						style={{backgroundColor:'#E6E6E6',borderRadius:15}}
+						style={{backgroundColor:'white',borderRadius:15}}
 						placeholder="Write your review here"
 						multiline={true}
 						numberOfLines={4}

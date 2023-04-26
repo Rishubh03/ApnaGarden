@@ -1,4 +1,4 @@
-import { Text, View, ScrollView, SafeAreaView, Image } from 'react-native';
+import { Text, View, ScrollView, SafeAreaView, Image, RefreshControl, ActivityIndicator } from 'react-native';
 import React, { useState, useEffect } from 'react'
 import { Card, Button } from 'react-native-paper';
 import { useSelector } from 'react-redux';
@@ -8,16 +8,35 @@ import TcDetails from '../components/TcDetails';
 
 
 const CommunityForums = ({ navigation }) => {
+
 	const token = useSelector(state => state.auth);
-	const { data, isSuccess, error, isLoading } = useListComplaintQuery(token.access_token);
+	const { data, isSuccess, error, isLoading, refetch } = useListComplaintQuery(token.access_token);
+	const [refreshing, setRefreshing] = React.useState(false);
+
+	const onRefresh = React.useCallback(() => {
+		setRefreshing(true);
+		setTimeout(() => {
+			setRefreshing(false);
+			refetch();
+		}, 2000);
+	}, []);
+
+
+
 	if (isLoading) {
-		<Text className="flex-1">Loading...</Text>
+		return (
+			<View className="flex-1 justify-center items-center">
+				<ActivityIndicator size="large" color="#50C2C9" />
+			</View>
+		)
 	}
 	else if (isSuccess) {
 		return (
 			<SafeAreaView className="flex-1 px-2">
 				<Text className="text-2xl text-center font-semibold text-gray-700">Track Complaints</Text>
-				<ScrollView className="">
+				<ScrollView className="" refreshControl={
+					<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+				}>
 
 					{data.map((item => (
 						<TcDetails key={item.id} item={item} token={token.access_token} />

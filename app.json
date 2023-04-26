@@ -34,6 +34,22 @@
       "eas": {
         "projectId": "d74c8279-07c8-43eb-9433-617a2d7607e1"
       }
-    }
+    },
+    "plugins": [
+      [
+      "react-native-vision-camera",
+      {
+        "cameraPermissionText": "Apna Garden needs access to your Camera.",
+        "enableMicrophonePermission": true,
+        "microphonePermissionText": "Apna Garden needs access to your Microphone."
+      }
+    ],
+    [
+      "expo-image-picker",
+        {
+          "photosPermission": "The app accesses your photos to let you share them with your friends."
+        }
+    ]
+    ]
   }
 }

@@ -2,12 +2,12 @@ import { createApi, fetchBaseQuery, } from '@reduxjs/toolkit/query/react'
 
 export const feedsApi = createApi({
 	reducerPath: "feedsApi",
-	baseQuery: fetchBaseQuery({ baseUrl: "http://192.168.34.101:8000/api/feeds/" }),
+	baseQuery: fetchBaseQuery({ baseUrl: "http://192.168.0.105:8000/api/feeds/" }),
 	endpoints: (builder) => ({
 		getFeeds: builder.query({
 			query: () => {
 				return {
-					url: "post/",
+					url: "list/",
 					method: "GET",
 				};
 			},
@@ -15,7 +15,7 @@ export const feedsApi = createApi({
 		createPost: builder.mutation({
 			query: ({post,token}) => {
 				return {
-					url: 'post/create/',
+					url: 'create/',
 					method: 'POST',
 					body: post,
 					headers: {

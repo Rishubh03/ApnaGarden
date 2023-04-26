@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery, } from '@reduxjs/toolkit/query/react'
 
 export const complaintApi = createApi({
 	reducerPath: 'complaintApi',
-	baseQuery: fetchBaseQuery({ baseUrl: 'http://192.168.34.101:8000/api/complaint/' }),
+	baseQuery: fetchBaseQuery({ baseUrl: 'http://192.168.0.105:8000/api/complaint/' }),
 	endpoints: (builder) => ({
 		registerComplaint: builder.mutation({
 			query: ({complaint,token}) => {
@@ -11,7 +11,7 @@ export const complaintApi = createApi({
 					method: 'POST',
 					body: complaint,
 					headers: {
-						'Content-type': 'application/json',
+						'Content-type': 'multipart/form-data',
 						'Authorization': `Bearer ${token}`,
 					}
 				}

@@ -5,14 +5,16 @@ import { removeToken, getToken } from '../../services/AsyncStorageService';
 import { useSelector } from 'react-redux';
 import { useGetLoggedUserQuery } from '../../services/userAuthApi';
 import { useDispatch } from 'react-redux'
-import { setUserAccessToken } from '../../features/authSlice'
+import { setUserAccessToken, unSetUserAccessToken } from '../../features/authSlice'
 
 const ProfileScreen = ({ navigation }) => {
 	const myData = useSelector(state => state.user)
+	const dispatch = useDispatch()
+
 	const handleFormSubmit = async () => {
 		await removeToken()
 		console.log("LogoutSuccess")
-		navigation.navigate('LoginScreen')
+		dispatch(unSetUserAccessToken())
 	}
 
 	return (

@@ -58,7 +58,7 @@ const HomeScreen = ({ navigation }) => {
 					</TouchableOpacity>
 				</View>
 				<View className="w-1/3 h-28 items-center justify-between border-r-2 border-gray-300">
-					<TouchableOpacity>
+					<TouchableOpacity onPress={() => { navigation.navigate('NearestGarden') }}>
 						<MaterialCommunityIcons name="near-me" color='#50C2C9' size={60} />
 						<Text className="text-center text-sm font-semibold">Nearest{'\n'}Garden</Text>
 					</TouchableOpacity>

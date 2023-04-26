@@ -25,7 +25,7 @@ const PasswordResetScreen = ({ navigation }) => {
     }
   }
   return (
-    <SafeAreaView className="flex-1 justify-center items-center bg-[#E6E6E6] px-3">
+    <SafeAreaView className="flex-1 justify-center items-center bg-white px-3">
 
       <Text className="text-2xl font-semibold mb-5">Reset Password!</Text>
       
@@ -36,7 +36,7 @@ const PasswordResetScreen = ({ navigation }) => {
         label="Please enter your registered email address"
         secureTextEntry={true}
         activeOutlineColor="#50C2C9"
-        style={{ marginVertical: 5, backgroundColor: '#E6E6E6' }}
+        style={{ marginVertical: 5, backgroundColor: 'white' }}
         outlineStyle={{ borderColor: '#50C2C9', borderRadius: 7, borderWidth: 2 }}
       />
 
